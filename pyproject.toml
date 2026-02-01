@@ -1,0 +1,16 @@
+[project]
+name = "walkmygraph"
+version = "0.0.1"
+description = "WalkMyGraph (WMG) is a specification by example software development using Knowledge Graph Traversals and Named Parameterized Queries"
+authors = [
+    {name = "Wolfgang Fahl", email = "wf@bitplan.com"}
+]
+license = {text = "Apache-2.0"}
+readme = "README.md"
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://wiki.bitplan.com/index.php/WalkMyGraph"
+Repository = "https://github.com/BITPlan/WalkMyGraph"
+"Wiki" = "https://wiki.bitplan.com/WalkMyGraph"
+"Wikidata" = "https://www.wikidata.org/entity/Q137971436"
