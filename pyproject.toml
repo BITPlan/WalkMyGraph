@@ -1,16 +1,72 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "walkmygraph"
-version = "0.0.1"
 description = "WalkMyGraph (WMG) is a specification by example software development using Knowledge Graph Traversals and Named Parameterized Queries"
 authors = [
-    {name = "Wolfgang Fahl", email = "wf@bitplan.com"}
+  {name = "Wolfgang Fahl", email = "wf@bitplan.com"}
 ]
-license = {text = "Apache-2.0"}
 readme = "README.md"
-requires-python = ">=3.8"
+license = "Apache-2.0"
+dependencies = [
+    # Core dependencies
+    "SPARQLWrapper>=2.0.0",
+    "rdflib>=7.0.0",
+    "networkx>=3.0",
+
+    # Optional: Wikidata/SPARQL support
+    # "wikibase-rest-api-client>=0.1.0",
+
+    # Your existing tools
+    "pybasemkit>=0.1.6",
+]
+requires-python = ">=3.10"
+
+classifiers=[
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Framework :: FastAPI",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Database :: Front-Ends",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Markup",
+]
+
+dynamic = ["version"]
+
+[tool.hatch.version]
+path = "wmg/__init__.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [project.urls]
 Homepage = "https://wiki.bitplan.com/index.php/WalkMyGraph"
 Repository = "https://github.com/BITPlan/WalkMyGraph"
-"Wiki" = "https://wiki.bitplan.com/WalkMyGraph"
-"Wikidata" = "https://www.wikidata.org/entity/Q137971436"
+Documentation = "https://wiki.bitplan.com/index.php/WalkMyGraph"
+Wikidata = "https://www.wikidata.org/entity/Q137971436"
+"Bug Tracker" = "https://github.com/BITPlan/WalkMyGraph/issues"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["wmg", "wmg_examples"]
+
+[tool.hatch.build.targets.wheel.sources]
+"wmg" = "wmg"
+"wmg_examples" = "wmg_examples"
+
+[project.scripts]
+wmg = "wmg.cli:main"
+walkmygraph = "wmg.cli:main"
