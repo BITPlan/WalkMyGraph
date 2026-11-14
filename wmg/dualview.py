@@ -64,6 +64,10 @@ class DualView:
             self.web_card = ui.card().classes("w-1/2")
         if walk_keys:
             self.select_walk(walk_keys[0])
+            # the first step is read and shown once the client is connected -
+            # a client that is not connected yet may be gone before the
+            # reading of both sides is done
+            ui.context.client.on_connect(self.show_step)
 
     def select_walk(self, walk_key: str):
         """
@@ -75,13 +79,13 @@ class DualView:
         self.walk_key = walk_key
         self.walk_steps = self.walk_set.steps(walk_key)
         self.pos = 0
-        ui.timer(0.1, self.show_step, once=True)
 
     async def on_walk_change(self, event):
         """
         react on the selection of a walk
         """
         self.select_walk(event.value)
+        await self.show_step()
 
     async def on_prev(self):
         """
