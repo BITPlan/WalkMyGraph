@@ -2,39 +2,70 @@
 Command line entry point for WalkMyGraph
 """
 
-from argparse import ArgumentParser, Namespace
+import sys
+from argparse import ArgumentParser
 
-from basemkit.base_cmd import BaseCmd
-from wmg.version import Version
+from ngwidgets.cmd import WebserverCmd
+
+from wmg.walk import WalkSet
+from wmg.webserver import WmgWebserver
 
 
-class WalkMyGraphCmd(BaseCmd):
-    """Command Line Interface for WalkMyGraph"""
+class WalkMyGraphCmd(WebserverCmd):
+    """
+    Command Line Interface for WalkMyGraph
+    """
 
     def getArgParser(self, description: str, version_msg) -> ArgumentParser:
+        """
+        get the argument parser
+        """
         parser = super().getArgParser(description, version_msg)
-        # NO additional arguments for now
+        parser.add_argument(
+            "--tell",
+            metavar="WALKFILE",
+            help="tell the stories of the walks of the given walk file",
+        )
+        parser.add_argument(
+            "--validate",
+            metavar="WALKFILE",
+            help="validate the given walk file as told walks",
+        )
         return parser
 
-    def handle_args(self, args: Namespace) -> bool:
-        handled = super().handle_args(args)
-        if handled:
-            return True
+    def handle_args(self, args) -> bool:
+        """
+        handle the command line arguments
+        """
+        handled = False
+        if args.tell:
+            walk_set = WalkSet.of_yaml(args.tell)
+            for walk_key in walk_set.walks:
+                print(walk_set.tell(walk_key))
+            handled = True
+        if args.validate:
+            walk_set = WalkSet.of_yaml(args.validate)
+            findings = walk_set.validate(told=True)
+            for finding in findings:
+                print(finding)
+            print(f"{len(findings)} findings")
+            handled = True
+        if not handled:
+            handled = super().handle_args(args)
+        return handled
 
-        # No additional commands for 0.0.2
-        # Just show help if no args
-        if not any(vars(args).values()):
-            self.parser.print_help()
-            return True
 
-        return False
-
-
-def main(argv=None):
-    """Main entry point for WalkMyGraph CLI."""
-    exit_code = WalkMyGraphCmd.main(Version(), argv)
+def main(argv: list = None):
+    """
+    Main entry point for WalkMyGraph CLI.
+    """
+    cmd = WalkMyGraphCmd(
+        config=WmgWebserver.get_config(),
+        webserver_cls=WmgWebserver,
+    )
+    exit_code = cmd.cmd_main(argv)
     return exit_code
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

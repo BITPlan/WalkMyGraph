@@ -1,0 +1,122 @@
+# WalkMyGraph told walk: Scholia author aspect for Tim Berners-Lee (Q80)
+# shape: navigation_steps.yaml of the Dual View Knowledge Graph Explorer plus pid, kg_url, record, said
+# node = PentaLink: pid with scheme, slug, type, kg_url, web_url; https://cr.bitplan.com/index.php/PentaLink
+# said = one Domain Storytelling sentence per step, numbered, actor, activity, work object; https://domainstorytelling.org
+# record: the RDD reel ScholiaAuthorWalk-Q80 of 2026-07-18, no audio; the said lines are drafts until told by the actor
+
+node_types:
+  author:
+    label: "Author"
+    wikidata_id: "Q5"
+    icon: "👤"
+
+  work:
+    label: "Work"
+    wikidata_id: "Q386724"
+    icon: "📄"
+
+  venue:
+    label: "Venue"
+    icon: "📚"
+
+  topic:
+    label: "Topic"
+    icon: "🏷️"
+
+  organization:
+    label: "Organization"
+    wikidata_id: "Q43229"
+    icon: "🏢"
+
+edge_types:
+  author_of:
+    label: "author of"
+    wikidata_id: "P50"
+    icon: "✍️"
+
+  published_in:
+    label: "published in"
+    wikidata_id: "P1433"
+    icon: "📚"
+
+  main_subject:
+    label: "main subject"
+    wikidata_id: "P921"
+    icon: "🏷️"
+
+  employer:
+    label: "employer"
+    wikidata_id: "P108"
+    icon: "💼"
+
+nodes:
+  tim_berners_lee:
+    slug: "Tim Berners-Lee"
+    type: author
+    pid: "wikidata:Q80"
+    kg_url: "https://www.wikidata.org/wiki/Q80"
+    web_url: "https://scholia-qlever-aachen.wikidata.dbis.rwth-aachen.de/author/Q80"
+
+  linked_data_story:
+    slug: "Linked data – the story so far"
+    type: work
+    pid: "wikidata:Q29301445"
+    kg_url: "https://www.wikidata.org/wiki/Q29301445"
+    web_url: "https://scholia-qlever-aachen.wikidata.dbis.rwth-aachen.de/work/Q29301445"
+
+  ijswis:
+    slug: "International Journal on Semantic Web and Information Systems"
+    type: venue
+    pid: "wikidata:Q15759214"
+    kg_url: "https://www.wikidata.org/wiki/Q15759214"
+    web_url: "https://scholia-qlever-aachen.wikidata.dbis.rwth-aachen.de/venue/Q15759214"
+
+  linked_data:
+    slug: "linked data"
+    type: topic
+    pid: "wikidata:Q515701"
+    kg_url: "https://www.wikidata.org/wiki/Q515701"
+    web_url: "https://scholia-qlever-aachen.wikidata.dbis.rwth-aachen.de/topic/Q515701"
+
+  w3c:
+    slug: "World Wide Web Consortium"
+    type: organization
+    pid: "wikidata:Q37033"
+    kg_url: "https://www.wikidata.org/wiki/Q37033"
+    web_url: "https://scholia-qlever-aachen.wikidata.dbis.rwth-aachen.de/organization/Q37033"
+
+edges:
+  tbl_author_of_linked_data_story:
+    from: tim_berners_lee
+    to: linked_data_story
+    type: author_of
+
+  linked_data_story_published_in:
+    from: linked_data_story
+    to: ijswis
+    type: published_in
+
+  linked_data_story_main_subject:
+    from: linked_data_story
+    to: linked_data
+    type: main_subject
+
+  tbl_employer_w3c:
+    from: tim_berners_lee
+    to: w3c
+    type: employer
+
+walks:
+  scholia_author_q80:
+    label: "Scholia author aspect walk for Tim Berners-Lee"
+    record: https://github.com/WolfgangFahl/nicescholia/discussions/12
+    start_node: tim_berners_lee
+    sequence:
+      - edge: tbl_author_of_linked_data_story
+        said: "✍️🤖 Agent/Sotsog draft: 1. Wolfgang Fahl opens the author page of Tim Berners-Lee and picks Linked data – the story so far from the list of publications."
+      - edge: linked_data_story_published_in
+        said: "✍️🤖 Agent/Sotsog draft: 2. Wolfgang Fahl reads on the work page where it was published, the International Journal on Semantic Web and Information Systems."
+      - edge: linked_data_story_main_subject
+        said: "✍️🤖 Agent/Sotsog draft: 3. Wolfgang Fahl finds linked data as the main subject of the work in the topics-works matrix."
+      - edge: tbl_employer_w3c
+        said: "✍️🤖 Agent/Sotsog draft: 4. Wolfgang Fahl checks the organization of the author, the World Wide Web Consortium. Annotation: the Use aspect of the author page is empty, WDscholia/scholia#1591."

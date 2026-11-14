@@ -21,6 +21,17 @@ dependencies = [
 
     # Your existing tools
     "pybasemkit>=0.1.6",
+    # https://github.com/WolfgangFahl/nicegui_widgets
+    # dual view with NiceGUI
+    "ngwidgets>=0.30.8",
+    # https://github.com/WolfgangFahl/pyLoDStorage
+    # abstract endpoint wikidata and prefix sets for the kg side
+    "pyLodStorage>=0.19.10",
+    # https://pypi.org/project/requests/
+    # reading the web side for its preview
+    "requests>=2.31.0",
+    # https://pypi.org/project/PyYAML/
+    "PyYAML>=6.0",
 ]
 requires-python = ">=3.10"
 
