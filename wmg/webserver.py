@@ -80,3 +80,7 @@ class WmgSolution(InputWebSolution):
             self.dual_view.setup_ui()
 
         await self.setup_content_div(show)
+        # both sides of the first node are read and shown once the client is
+        # connected - before that the client may be gone again while reading
+        await self.client.connected()
+        await self.dual_view.show_step()
