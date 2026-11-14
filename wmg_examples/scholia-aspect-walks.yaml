@@ -1,0 +1,32 @@
+# Scholia aspect walks: one line per walk - aspect, query and parameters
+# see https://github.com/WolfgangFahl/nicescholia/issues/15
+#
+# aspect and query are the Scholia names: the query author_venue-statistics
+# is the panel venue-statistics of the aspect author
+# the parameters come from the Scholia examples sheet
+# https://docs.google.com/spreadsheets/d/1cbEY7P9U-1xtvEgeAiizjJiOkpuihRFdc03JL239Ixg
+# the expected result is a lower bound and one entry that must be among the
+# results - it can falsify a walk, not verify it
+#
+# WF 2026-11-14
+walks:
+  - aspect: author
+    query: list-of-publications
+    params:
+      q: Q2399315 # Leena Peltonen-Palotie
+    min_count: 314
+    source: examples sheet author/Q2399315
+  - aspect: author
+    query: list-of-publications
+    params:
+      q: Q80 # Tim Berners-Lee
+    min_count: 64
+    contains: wikidata:Q29301445 # Linked data - the story so far
+    source: RDD reel ScholiaAuthorWalk-Q80
+  - aspect: author
+    query: venue-statistics
+    params:
+      q: Q2399315 # Leena Peltonen-Palotie
+    min_count: 99
+    contains: wikidata:Q976454 # Nature Genetics
+    source: examples sheet author/Q2399315
